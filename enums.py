@@ -1,5 +1,6 @@
 class Token:
-    OPERAND = "+-*/%"
+    NUMS = "0123456789",
+    OPERANDS = "+-*/%"
 
 class NotationType:
     POSTFIX = "postfix"
