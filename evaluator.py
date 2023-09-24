@@ -1,4 +1,3 @@
-from xml.etree.ElementInclude import include
 from enums import *
 from pile import Pile
 from errors import *
@@ -11,14 +10,6 @@ class Evaluator:
     
     def __repr__(self):
         return " ".join(self.ev)
-    
-    op = {
-        "+": lambda x, y : x + y,
-        "-": lambda x, y : x - y,
-        "*": lambda x, y : x * y,
-        "/": lambda x, y : x / y,
-        "%": lambda x, y : x % y
-    }
 
     def checkExpression(self):
         if self.ev[-1].replace('.', '', 1).isnumeric():
@@ -34,8 +25,8 @@ class Evaluator:
                 for _ in range(2):
                     if p.isEmpty():
                         raise MissingValue(i)
-                    ts.append(p.unstack())  
-                p.stack(self.op.get(c, None)(ts[1], ts[0]))
+                    ts.append(p.unstack())
+                p.stack(Token.OPERANDS.get(c, None)(ts[1], ts[0]))
             elif c.replace('.', '', 1).isnumeric():
                 p.stack(float(c))
             elif c.replace('.', '').isnumeric():
@@ -50,6 +41,3 @@ class Evaluator:
     def eval(self):
         func = getattr(self, self.nty)
         return func()
-
-ev = Evaluator("2 3.2 +")
-print(ev.eval())
